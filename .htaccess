@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /
+FallbackResource /onaji/page/404.php
+<Files .env>
+    order allow,deny
+    deny from all
+</Files>

@@ -1,0 +1,17 @@
+#database
+DB_HOST=103.134.152.6
+DB_PORT=3306
+DB_DATABASE=stylecod_pemweb
+DB_USERNAME=stylecod_public
+DB_PASSWORD=e_lib_everyone
+DB_PREFIX=kiero_
+TIMEZONE=Africa/Abidjan
+
+#LINK
+LINK_WEB=http://localhost/onaji/
+
+#nama web
+asep_website=asep_website
+haruman=haruman
+PENGIRIM_EMAIL=harumanwiguna@upi.edu
+
