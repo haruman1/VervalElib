@@ -145,7 +145,7 @@ if ($_SESSION['role'] == 1) {
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h2 class="m-0 font-weight-bold text-primary">Kelola Buku</h2>
-                            <a href="book/add-book.php" class="btn btn-primary btn-icon-split">
+                            <a href="#" class="btn btn-primary btn-icon-split addBook">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-plus-square"></i>
                                         </span>
@@ -169,7 +169,7 @@ if ($_SESSION['role'] == 1) {
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Id Buku</th>
+                                            <th>ID Buku</th>
 							                <th>Judul Buku</th>
 							                <th>Kategori</th>
 							                <th>Author</th>
@@ -192,8 +192,8 @@ if ($_SESSION['role'] == 1) {
                                             echo "<td>" . $row['file_buku'] . "</td>";    
                                             echo "<td>" . $row['stok'] . "</td>";
                                             echo "<td>" . $row['total_pinjam'] . "</td>";   
-                                            echo "<td><a class='btn btn-primary btn-icon-split' href='#' data-toggle='modal' data-target='#editModal''><span class='text'>Ubah</span></a>
-                                                      <a class='btn btn-danger btn-icon-split'  href='#'><span class='text'>Hapus</span></a></td>";
+                                            echo "<td><a class='btn btn-primary btn-icon-split' style='margin:10px;' href='#' data-toggle='modal' data-target='#editModal''><span class='text'><i class='fa fa-book'></i></span></a>
+                                                      <a class='btn btn-danger btn-icon-split' style='margin:10px;' href='#'><span class='text'><i class='fa fa-trash'></i></span></a></td>";
                                             echo '</tr>';
                                         }
                                     ?>
@@ -278,6 +278,56 @@ if ($_SESSION['role'] == 1) {
         </div>
     </div>
 
+    <!-- Add Book Modal-->
+    <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Buku</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <form class="user" method="POST" action="/admin2/user/update-data.php">
+                                <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="iduser"
+                                            placeholder="ID User" readonly required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="username"
+                                            placeholder="Username" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="email"
+                                        placeholder="Email Address" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-user" id="password"
+                                        placeholder="Password" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="role"
+                                        placeholder="Role" required>
+                                </div>
+                                <div class="file-drop-area">
+                                <span class="choose-file-button">Choose files</span>
+                                <span class="file-message">or drag and drop files here</span>
+                                <input class="file-input" type="file" multiple>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Tambah
+                                    </button>
+                            </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -297,6 +347,17 @@ if ($_SESSION['role'] == 1) {
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+    <script>
+        $(document).ready(function(){
+	    $(document).on('click', '.addBook', function(){
+		$('#addBookModal').modal('show');
+		
+	});
+    });
+    </script>
+    <script>
+        $('.file-upload').file_upload();
+    </script>
 
 
 </body>

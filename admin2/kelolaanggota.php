@@ -185,8 +185,8 @@ if ($_SESSION['role'] == 1) {
                                             echo "<td>" . $row['id_user'] . "</td>";
                                             echo "<td>" . $row['role'] . "</td>";
                                             echo "<td>" . $row['is_active'] . "</td>";
-                                            echo "<td><a class='btn btn-primary btn-icon-split' href='#' data-toggle='modal' data-target='#editModal''><span class='text'>Ubah</span></a>
-                                                      <a class='btn btn-danger btn-icon-split' href='./user/delete-user.php?id_user=".$row['id_user']."'><span class='text'>Hapus</span></a></td>";
+                                            echo "<td><button class='btn btn-primary btn-icon-split editButton' href='#' value='".$row['id_user']."'><span class='text'><i class='fa fa-book'></i></span></button>
+                                                      <button class='btn btn-danger btn-icon-split deleteButton' href='#' value='".$row['id_user']."'><span class='text'><i class='fa fa-trash'></></span></button></td>";
                                             echo '</tr>';
                                         }
                                     ?>
@@ -287,7 +287,7 @@ if ($_SESSION['role'] == 1) {
                 <form class="user" method="POST" action="/admin2/user/update-data.php">
                                 <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="iduser"
-                                            placeholder="ID User" required>
+                                            placeholder="ID User" readonly required>
                                 </div>
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="username"
@@ -315,11 +315,33 @@ if ($_SESSION['role'] == 1) {
                             </form>
                 </div>
                 <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Delete Modal-->
+       <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                Anda yakin akan menghapus anggota ini?
+                </div>
+                <div class="modal-footer">
+                    <a class='btn btn-danger btn-icon-split' id="hapusAnggota" href=''><span class='text'>Hapus</span></a>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -340,6 +362,27 @@ if ($_SESSION['role'] == 1) {
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+    <script>
+        $(document).ready(function(){
+	    $(document).on('click', '.editButton', function(){
+		var id=$(this).val();
+ 
+		$('#editModal').modal('show');
+		$('#iduser').val(id);
+	});
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+	    $(document).on('click', '.deleteButton', function(){
+        var id=$(this).val();
+        var hapus = "/E-lib/Library/admin2/user/delete-user.php?id_user=";
+ 
+		$('#deleteModal').modal('show');
+		$('a#hapusAnggota').attr("href", hapus + id);
+	});
+    });
+    </script>
 
 
 </body>
