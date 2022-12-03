@@ -14,7 +14,7 @@ $email = $_POST["email"];
 $role = $_POST["role"];
 $is_active = $_POST["is_active"];
 
-    $sql_update = mysqli_query($con, "UPDATE user SET id_user='$id_user', username='$username', password='$password', email= '$email ', role='$role', is_active='$is_active' WHERE id_user = '$id_user'");
+    $sql_update = mysqli_query($con, "UPDATE user SET username='$username', password='$password', email= '$email ', role='$role', is_active='$is_active' WHERE id_user = '$id_user'");
 
     if( $sql_update ) {
         // kalau berhasil alihkan ke halaman index.php dengan status=sukses

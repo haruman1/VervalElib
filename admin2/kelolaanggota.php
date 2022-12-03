@@ -272,6 +272,8 @@ if ($_SESSION['role'] == 1) {
         </div>
     </div>
 
+    
+
        <!-- Edit Modal-->
        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -284,32 +286,36 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="/admin2/user/update-data.php">
+                <form class="user" id="editForm" method="POST" action="/E-lib/Library/admin2/user/update-data.php">
                                 <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="iduser"
-                                            placeholder="ID User" readonly required>
+                                <input type="text" class="form-control form-control-user" id="iduser"
+                                            placeholder="ID User" name="id_user" value="" readonly required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="name"
+                                            placeholder="Nama" name="nama" value="" required>
                                 </div>
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="username"
-                                            placeholder="Username" required>
+                                            placeholder="Username" name="username" value="" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="email"
-                                        placeholder="Email Address" required>
+                                        placeholder="Email Address" name="email" value="" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user" id="password"
-                                        placeholder="Password" required>
+                                        placeholder="Password" name="password" value="" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="role"
-                                        placeholder="Role" required>
+                                        placeholder="Role" name="role" value="" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="isactive"
-                                        placeholder="Is Active" required>
+                                        placeholder="Is Active" name="is_active" value="" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" id="editSubmit" class="btn btn-primary btn-user btn-block">
                                     Submit
                                     </button>
                             </form>

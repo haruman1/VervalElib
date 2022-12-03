@@ -290,10 +290,10 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="/admin2/user/update-data.php">
+                <form class="user" method="POST" action="/E-lib/Library/admin2/user/update-data.php">
                                 <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="iduser"
-                                            placeholder="ID User" readonly required>
+                                            placeholder="ID Buku" readonly required>
                                 </div>
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="username"
@@ -311,7 +311,7 @@ if ($_SESSION['role'] == 1) {
                                     <input type="text" class="form-control form-control-user" id="role"
                                         placeholder="Role" required>
                                 </div>
-                                <div class="file-drop-area">
+                                <div class="file-drop-area" style="margin-top: 10px; margin-bottom: 20px;">
                                 <span class="choose-file-button">Choose files</span>
                                 <span class="file-message">or drag and drop files here</span>
                                 <input class="file-input" type="file" multiple>
