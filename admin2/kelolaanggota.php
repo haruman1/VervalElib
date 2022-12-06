@@ -79,6 +79,11 @@ if ($_SESSION['role'] == 1) {
                     <i class="fas fa-fw fa-book"></i>
                     <span>Kelola Buku</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="transaksi.php">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Transaksi Buku</span></a>
+            </li>
             
             
 

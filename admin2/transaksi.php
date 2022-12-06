@@ -18,7 +18,7 @@ if ($_SESSION['role'] == 1) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo $_ENV['NAMA_WEB']  ?> | Admin Kelola Buku</title>
+    <title><?php echo $_ENV['NAMA_WEB']  ?> | Admin</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdnharuman.herokuapp.com/e-lib/E-Lib%20Logo/32x32/Logo.png">
@@ -40,8 +40,21 @@ if ($_SESSION['role'] == 1) {
     $sql_user = 'SELECT nama, username, email, id_user FROM user';
     $query_user = mysqli_query($con, $sql_user);
 
-    $sql_book = 'SELECT id_buku, judulbuku, kategoribuku, author, file_buku,stok, total_pinjam FROM hlmnbuku';
+    $sql_book = 'SELECT judulbuku, kategoribuku, author FROM hlmnbuku';
     $query_book = mysqli_query($con, $sql_book);
+
+    $i = 0;
+    $total_pinjamhasil = 0;
+    $sql_transaksi = mysqli_query($con, 'SELECT*FROM hlmnbuku');
+    while ($r = mysqli_fetch_array($sql_transaksi)) {
+        $i++;
+        $total_pinjamhasil += $r["total_pinjam"];
+    }
+
+// $hitung_transaksi = mysqli_fetch_array(mysqli_query($con, "SELECT SUM(total_pinjam) as total from hlmnbuku")[0]);
+
+$sql_transaction = "SELECT * FROM transaksibuku";
+$query_transaction = mysqli_query($con, $sql_transaction);
 ?>
 
 <body id="page-top">
@@ -73,12 +86,12 @@ if ($_SESSION['role'] == 1) {
                     <i class="fas fa-fw fa-users"></i>
                     <span>Kelola Anggota</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="kelolabuku.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Kelola Buku</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="transaksi.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Transaksi Buku</span></a>
@@ -146,62 +159,120 @@ if ($_SESSION['role'] == 1) {
                         <h1 class="h3 mb-0 text-gray-800">Menu Admin</h1>
                     </div>
 
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Koleksi Buku</div>
+                                            <div class="h2 mb-0 font-weight-bold text-gray-800"><?php
+                                    echo mysqli_num_rows($query_book);
+                                    ?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-book fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Anggota</div>
+                                            <div class="h2 mb-0 font-weight-bold text-gray-800"><?php
+                                    echo mysqli_num_rows($query_user);
+                                    ?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Transaksi
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h2 mb-0 mr-3 font-weight-bold text-gray-800"><?php
+                                    echo $total_pinjamhasil;
+                                    ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Content Row -->
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h2 class="m-0 font-weight-bold text-primary">Kelola Buku</h2>
-                            <a href="#" class="btn btn-primary btn-icon-split addBook">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-plus-square"></i>
-                                        </span>
-                                        <span class="text">Tambah Buku</span>
-                        </a>
+                            <h2 class="m-0 font-weight-bold text-primary">Transaksi Buku</h2>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id Buku</th>
-							                <th>Judul Buku</th>
-							                <th>Kategori</th>
-							                <th>Author</th>
-							                <th>File Buku</th>
-							                <th>stok</th>
-							                <th>Jumlah Peminjaman</th>
-							                <th>Aksi</th>
+                                            <th>ID</th>
+                                            <th>ID Buku</th>
+                                            <th>Judul Buku</th>
+                                            <th>Tanggal Peminjaman</th>
+                                            <th>Tanggal Pengembalian</th>
+                                            <th>File Buku</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>ID</th>
                                             <th>ID Buku</th>
-							                <th>Judul Buku</th>
-							                <th>Kategori</th>
-							                <th>Author</th>
-							                <th>File Buku</th>
-							                <th>Stok</th>
-							                <th>Jumlah Peminjaman</th>
-							                <th>Aksi</th>
+                                            <th>Judul Buku</th>
+                                            <th>Tanggal Peminjaman</th>
+                                            <th>Tanggal Pengembalian</th>
+                                            <th>File Buku</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
 
                                     <?php
-                                        while ($row = mysqli_fetch_array($query_book))
-                                        {
+                                        while ($row = mysqli_fetch_array($query_transaction)) {
                                             echo '<tr>';
+                                            echo "<td>" . $row['id'] . "</td>";
                                             echo "<td>" . $row['id_buku'] . "</td>";
                                             echo "<td>" . $row['judulbuku'] . "</td>";
-                                            echo "<td>" . $row['kategoribuku'] . "</td>";
-                                            echo "<td>" . $row['author'] . "</td>";   
-                                            echo "<td>" . $row['file_buku'] . "</td>";    
-                                            echo "<td>" . $row['stok'] . "</td>";
-                                            echo "<td>" . $row['total_pinjam'] . "</td>";   
-                                            echo "<td><a class='btn btn-primary btn-icon-split' style='margin:10px;' href='#' data-toggle='modal' data-target='#editModal''><span class='text'><i class='fa fa-book'></i></span></a>
-                                                      <a class='btn btn-danger btn-icon-split' style='margin:10px;' href='#'><span class='text'><i class='fa fa-trash'></i></span></a></td>";
+                                            echo "<td>" . $row['tanggal_peminjaman'] . "</td>";
+                                            echo "<td>" . $row['tanggal_pengembalian'] . "</td>";
+                                            echo "<td>" . $row['file_buku'] . "</td>";
                                             echo '</tr>';
                                         }
                                     ?>
+                                    
                                     </tbody>
                                 </table>
                             </div>
@@ -283,56 +354,6 @@ if ($_SESSION['role'] == 1) {
         </div>
     </div>
 
-    <!-- Add Book Modal-->
-    <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Buku</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                <form class="user" method="POST" action="/E-lib/Library/admin2/user/update-data.php">
-                                <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="iduser"
-                                            placeholder="ID Buku" readonly required>
-                                </div>
-                                <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="username"
-                                            placeholder="Username" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email"
-                                        placeholder="Email Address" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="password"
-                                        placeholder="Password" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="role"
-                                        placeholder="Role" required>
-                                </div>
-                                <div class="file-drop-area" style="margin-top: 10px; margin-bottom: 20px;">
-                                <span class="choose-file-button">Choose files</span>
-                                <span class="file-message">or drag and drop files here</span>
-                                <input class="file-input" type="file" multiple>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Tambah
-                                    </button>
-                            </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -352,17 +373,6 @@ if ($_SESSION['role'] == 1) {
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
-    <script>
-        $(document).ready(function(){
-	    $(document).on('click', '.addBook', function(){
-		$('#addBookModal').modal('show');
-		
-	});
-    });
-    </script>
-    <script>
-        $('.file-upload').file_upload();
-    </script>
 
 
 </body>
